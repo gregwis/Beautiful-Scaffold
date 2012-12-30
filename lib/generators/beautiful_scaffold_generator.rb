@@ -131,7 +131,7 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
   def generate_model
     generate("model", "#{model} #{beautiful_attr_to_rails_attr.join(' ')} #{@fulltext_field.join(' ')}")
     
-    inject_into_file("app/models/#{model}.rb",'
+    inject_into_file("app/models/#{model.underscore}.rb",'
   scope :sorting, lambda{ |options|
     attribute = options[:attribute]
     direction = options[:sorting]
