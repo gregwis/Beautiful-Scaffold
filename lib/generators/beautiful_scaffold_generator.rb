@@ -131,7 +131,7 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
   def generate_model
     generate("model", "#{model} #{beautiful_attr_to_rails_attr.join(' ')} #{@fulltext_field.join(' ')}")
     
-    inject_into_file("app/models/#{model.underscore}.rb",'
+    inject_into_file("app/models/#{model}.rb",'
   scope :sorting, lambda{ |options|
     attribute = options[:attribute]
     direction = options[:sorting]
@@ -146,7 +146,7 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
     (self["name"] || self["label"] || self["description"] || "##{id}")
   end', :after => "class #{model_camelize} < ActiveRecord::Base")
     
-     inject_into_file("app/models/#{model.underscore}.rb",'
+     inject_into_file("app/models/#{model}.rb",'
   include BeautifulScaffoldModule      
 
   before_save :fulltext_field_processing
@@ -167,10 +167,10 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
     myattributes.each{ |attr|
       a,t = attr.split(':')
       if ['references', 'reference'].include?(t) then
-        inject_into_file("app/models/#{model.underscore}.rb", ":#{a}_id, ", :after => "attr_accessible ")
+        inject_into_file("app/models/#{model}.rb", ":#{a}_id, ", :after => "attr_accessible ")
         begin
           inject_into_file("app/models/#{a}.rb", "\n  has_many :#{model_pluralize}, :dependent => :nullify", :after => "ActiveRecord::Base")
-          inject_into_file("app/models/#{a}.rb", ":#{model.underscore}_ids, ", :after => "attr_accessible ")
+          inject_into_file("app/models/#{a}.rb", ":#{model}_ids, ", :after => "attr_accessible ")
         rescue
         end
       end
@@ -181,14 +181,14 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
     copy_file  "app/controllers/master_base.rb", "app/controllers/beautiful_controller.rb"
     dirs = ['app', 'controllers', options[:namespace]].compact
     empty_directory File.join(dirs)
-    template   "app/controllers/base.rb", File.join([dirs, "#{model.tableize}_controller.rb"].flatten)
+    template   "app/controllers/base.rb", File.join([dirs, "#{model_pluralize}_controller.rb"].flatten)
   end
   
   def generate_helper
     copy_file  "app/helpers/beautiful_helper.rb", "app/helpers/beautiful_helper.rb"
     dirs = ['app', 'helpers', options[:namespace]].compact
     empty_directory File.join(dirs)
-    template   "app/helpers/model_helper.rb", File.join([dirs, "#{model.tableize}_helper.rb"].flatten)
+    template   "app/helpers/model_helper.rb", File.join([dirs, "#{model_pluralize}_helper.rb"].flatten)
   end
 
   def generate_views
