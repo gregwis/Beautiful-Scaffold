@@ -188,7 +188,7 @@ class BeautifulScaffoldGenerator < Rails::Generators::Base
     copy_file  "app/helpers/beautiful_helper.rb", "app/helpers/beautiful_helper.rb"
     dirs = ['app', 'helpers', options[:namespace]].compact
     empty_directory File.join(dirs)
-    template   "app/helpers/model_helper.rb", File.join([dirs, "#{model_pluralize}_helper.rb"].flatten)
+    template   "app/helpers/model_helper.rb", File.join([dirs, "#{model.tableize}_helper.rb"].flatten)
   end
 
   def generate_views
