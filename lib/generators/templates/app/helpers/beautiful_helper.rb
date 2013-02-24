@@ -61,7 +61,7 @@ module BeautifulHelper
     model_path.delete(model_path.first)
     model_name_for_ransack = model_path.join("_")
 
-    ar_model = model_name.classify.constantize
+    ar_model = model_name.camelize.constantize
 
     default_caption = caption
     if default_caption.blank? then
