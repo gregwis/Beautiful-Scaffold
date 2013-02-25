@@ -19,6 +19,14 @@ module BeautifulScaffoldCommonMethods
     return str
   end
   
+  def namespace_for_route
+    str = namespace_alone
+    if not str.blank? then
+      str = str.downcase + '_'
+    end
+    return str
+  end
+  
   def namespace_for_url
     str = namespace_alone
     if not str.blank? then
