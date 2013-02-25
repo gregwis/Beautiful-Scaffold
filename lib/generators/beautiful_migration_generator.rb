@@ -10,7 +10,6 @@ class BeautifulMigrationGenerator < Rails::Generators::Base
   argument :name, :type => :string, :desc => "Name of the migration CamelCase AddXXXToYYY"
   argument :myattributes, :type => :array, :default => [], :banner => "field:type field:type"
   class_option :namespace, :default => nil
-  class_option :reference_namespace, :default => nil
 
   def install_gems
     require_gems
