@@ -21,6 +21,9 @@ module BeautifulScaffoldCommonMethods
   
   def namespace_for_reference_route
     str = options[:reference_namespace].to_s.downcase
+    if str.blank? then
+      str = namespace_alone
+    end
     if not str.blank? then
       str = str.downcase + '_'
     end
